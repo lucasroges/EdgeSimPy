@@ -5,9 +5,9 @@ description = "Python-based modeling and simulation framework for Edge Computing
 authors = ["Paulo Severo <paulo.severo@edu.pucrs.br>"]
 
 [tool.poetry.dependencies]
-python = "^3.7.1"
+python = "^3.8"
 Mesa = "^1.0.0"
-networkx = "2.6.2"
+networkx = "^3.0"
 msgpack = "^1.0.4"
 
 [tool.poetry.dev-dependencies]
