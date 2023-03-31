@@ -200,7 +200,7 @@ class Service(ComponentManager, Agent):
 
                     # Selecting the path that will be used to transfer the service state
                     path = nx.shortest_path(
-                        G=self.model.topology,
+                        self.model.topology,
                         source=self.server.base_station.network_switch,
                         target=migration["target"].base_station.network_switch,
                     )

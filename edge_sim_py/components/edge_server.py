@@ -184,7 +184,7 @@ class EdgeServer(ComponentManager, Agent):
                 if registry.server and any(layer.digest == l.digest for l in registry.server.container_layers):
                     # Selecting a network path to be used to pull the layer from the registry
                     path = nx.shortest_path(
-                        G=self.model.topology,
+                        self.model.topology,
                         source=registry.server.base_station.network_switch,
                         target=self.base_station.network_switch,
                     )

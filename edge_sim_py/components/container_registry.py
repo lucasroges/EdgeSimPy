@@ -238,3 +238,21 @@ class ContainerRegistry(ComponentManager, Agent):
             # Removing the registry
             self.model.schedule.remove(self)
             self.__class__._instances.remove(self)
+
+    def add_container_image(self, container_image: object):
+        """Adds a container image object to the self container registry object.
+
+        Args:
+            container_image (object): Container image to be added in the container registry.
+        """
+        # Creating relationship between the edge server and the image
+        container_image.server = self.server
+        self.server.container_images.append(container_image)
+
+        for layer in container_image.layers:
+            # Creating relationship between the edge server and the image layer
+            layer.server = self.server
+            self.server.container_layers.append(layer)
+
+            # Updating edge server's resource usage based on the layer size
+            self.server.disk_demand += layer.size

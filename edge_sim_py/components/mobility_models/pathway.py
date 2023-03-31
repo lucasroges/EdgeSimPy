@@ -36,7 +36,7 @@ def pathway(user: object):
         target_node = random.choice([bs for bs in BaseStation.all() if bs != current_node])
 
         # Calculating the shortest mobility path according to the Pathway mobility model
-        path = nx.shortest_path(G=user.model.topology, source=current_node.network_switch, target=target_node.network_switch)
+        path = nx.shortest_path(user.model.topology, source=current_node.network_switch, target=target_node.network_switch)
         mobility_path.extend([network_switch.base_station for network_switch in path])
 
         if i < n_paths - 1:

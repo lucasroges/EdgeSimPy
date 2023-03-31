@@ -238,7 +238,7 @@ class User(ComponentManager, Agent):
                     path = []
                 else:
                     path = nx.shortest_path(
-                        G=topology,
+                        topology,
                         source=origin.network_switch,
                         target=target.network_switch,
                         weight="delay",
