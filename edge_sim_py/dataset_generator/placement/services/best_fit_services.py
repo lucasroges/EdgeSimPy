@@ -1,6 +1,7 @@
 """ Contains a method that defines the initial placement of services based on the well-known Best-Fit heuristic."""
 # EdgeSimPy components
 from edge_sim_py.components.edge_server import EdgeServer
+from edge_sim_py.components.container_image import ContainerImage
 from edge_sim_py.components.container_layer import ContainerLayer
 from edge_sim_py.components.service import Service
 from edge_sim_py.components.user import User
@@ -39,6 +40,23 @@ def best_fit_services():
                     # Creating relationship between the host and the layer
                     layer.server = edge_server
                     edge_server.container_layers.append(layer)
+
+                # Finding image provisioned on the edge server to get metadata
+                template_image = ContainerImage.find_by(attribute_name="digest", attribute_value=service.image_digest)
+                if template_image is None:
+                    raise Exception(f"Could not find any container image with digest: {service.image_digest}")
+
+                # Creating the new image on the target host
+                image = ContainerImage()
+                image.name = template_image.name
+                image.digest = template_image.digest
+                image.tag = template_image.tag
+                image.architecture = template_image.architecture
+                image.layers_digests = template_image.layers_digests
+
+                # Connecting the new image to the target host
+                image.server = edge_server
+                edge_server.container_images.append(image)
 
                 break
 
