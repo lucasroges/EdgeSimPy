@@ -154,8 +154,11 @@ class User(ComponentManager, Agent):
         if self.coordinates != self.coordinates_trace[self.model.schedule.steps]:
             self.coordinates = self.coordinates_trace[self.model.schedule.steps]
 
-            # Connecting the user to the closest base station
+            # Connecting the user to the closest base station and updating relationships
+            previous_base_station = self.base_station
+            previous_base_station.users.remove(self)
             self.base_station = BaseStation.find_by(attribute_name="coordinates", attribute_value=self.coordinates)
+            self.base_station.users.append(self)
 
             for application in self.applications:
                 # Only updates the routing path of apps available (i.e., whose services are available)
