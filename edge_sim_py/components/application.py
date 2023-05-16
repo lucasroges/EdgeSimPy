@@ -41,9 +41,6 @@ class Application(ComponentManager, Agent):
         # List of users that access the application
         self.users = []
 
-        # Application provisioning status
-        self.being_provisioned = False
-
         # Model-specific attributes (defined inside the model's "initialize()" method)
         self.model = None
         self.unique_id = None
@@ -76,13 +73,8 @@ class Application(ComponentManager, Agent):
         return metrics
 
     def step(self):
-        """Method that executes the events involving the object at each time step.
-        """
-        # Checking if some application's service is being provisioned
-        if any([service.being_provisioned for service in self.services]):
-            self.being_provisioned = True
-        else:
-            self.being_provisioned = False
+        """Method that executes the events involving the object at each time step."""
+        ...
 
     def connect_to_service(self, service: object) -> object:
         """Creates a relationship between the application and a given Service object.
